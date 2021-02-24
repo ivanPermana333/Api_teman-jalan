@@ -236,10 +236,10 @@ class UserController extends Controller
       else{
           $user = \App\User::create([
               'name' => $request->name,
-              'email' => $request->email,
+              // 'email' => $request->email,
               'username' => $request->username,
               'phone' => $request->phone,
-              'address' => $request->address,
+              // 'address' => $request->address,
               'token' => $request->token,
               'password' => Hash::make($request->password),
               'roles'    => json_encode(['CUSTOMER']),
