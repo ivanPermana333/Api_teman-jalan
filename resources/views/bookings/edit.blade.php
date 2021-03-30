@@ -48,15 +48,15 @@
     </div>
 
     <div class="form-group">
-      <label for="field">Field</label>
+      <label for="teman">Teman</label>
       <input
-      value="{{$booking->field->name}}"
-      class="form-control {{$errors->first('field') ? "is-invalid": ""}}"
+      value="{{$booking->teman->name}}"
+      class="form-control {{$errors->first('teman') ? "is-invalid": ""}}"
       type="text"
-      name="field"
+      name="teman"
       disabled/>
       <div class="invalid-feedback">
-        {{$errors->first('field')}}
+        {{$errors->first('teman')}}
       </div>
     </div>
 

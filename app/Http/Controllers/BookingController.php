@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Gate;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
+use App\Booking;
+use Illuminate\Support\Facades\Validator;
 use FCM;
 
 class BookingController extends Controller
@@ -16,16 +18,16 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
-       // OTORISASI GATE
+    // public function __construct(){
+    //    // OTORISASI GATE
 
-      $this->middleware(function($request, $next){
+    //   $this->middleware(function($request, $next){
 
-        if(Gate::allows('manage-bookings')) return $next($request);
+    //     if(Gate::allows('manage-bookings')) return $next($request);
 
-        abort(403, 'Anda tidak memiliki cukup hak akses');
-      }, ['except' => ['unavailableTime', 'store', 'bookings']]);
-    }
+    //     abort(403, 'Anda tidak memiliki cukup hak akses');
+    //   }, ['except' => ['unavailableTime', 'store', 'bookings']]);
+    // }
 
     public function index(Request $request)
     {
@@ -96,7 +98,9 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+      $booking = \App\Booking::findOrFail($id);
+
+      return view('payments.index', ['booking' => $booking]);
     }
 
     /**
@@ -165,6 +169,7 @@ class BookingController extends Controller
         //
     }
 
+
     public function unavailableTime(Request $request)
     {
       $bookings = \App\Booking::where('teman_id', $request->id)->where('date', $request->date)->get();
@@ -200,6 +205,7 @@ class BookingController extends Controller
       ]);
     }
 
+
     public function sendNotification($token, $title, $body)
     {
       $optionBuilder = new OptionsBuilder();
@@ -221,5 +227,23 @@ class BookingController extends Controller
       $downstreamResponse->numberSuccess();
       $downstreamResponse->numberFailure();
       $downstreamResponse->numberModification();
+    }
+
+    public function payment(Request $request, $id)
+    {
+      \Validator::make($request->all(), [
+        "picture" => "required"
+      ])->validate();
+
+      $booking = \App\Booking::with('user')->findOrFail($id);
+
+    if($request->file('picture')){
+      $file = $request->file('picture')->store('pictures', 'public');
+
+      $booking->picture = $file;
+  }
+
+  $booking->save();
+    return redirect('bukti_pembayaran/'.$booking->id)->with('status', 'temans successfully added.');
     }
 }

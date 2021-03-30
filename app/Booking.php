@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $fillable = [
-        'user_id', 'teman_id', 'time', 'total_price', 'date'
-    ];
+    protected $fillable = ['user_id', 'teman_id', 'time', 'total_price', 'date', 'picture'];
 
     public function user(){
       return $this->belongsTo("App\User");

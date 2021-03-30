@@ -15,10 +15,12 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
           $table->increments('id');
+          // $table->string('name');
           $table->bigInteger('user_id')->unsigned();
           $table->integer('teman_id')->unsigned();
           $table->date('date');
           $table->string('time');
+          $table->string('picture');
           $table->string('code')->nullable();
           $table->integer('total_price');
           $table->enum('status', ["PENDING", "ACCEPT", "REJECT"])->default("PENDING");

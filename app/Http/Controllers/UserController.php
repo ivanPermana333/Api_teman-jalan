@@ -15,16 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
-       // OTORISASI GATE
+    // public function __construct(){
+    //    // OTORISASI GATE
 
-      $this->middleware(function($request, $next){
+    //   $this->middleware(function($request, $next){
 
-        if(Gate::allows('manage-users')) return $next($request);
+    //     if(Gate::allows('manage-users')) return $next($request);
 
-        abort(403, 'Anda tidak memiliki cukup hak akses');
-      }, ['except' => ['login', 'register', 'profile']]);
-    }
+    //     abort(403, 'Anda tidak memiliki cukup hak akses');
+    //   }, ['except' => ['login', 'register', 'profile']]);
+    // }
 
     public function index(Request $request)
     {
@@ -235,11 +235,11 @@ class UserController extends Controller
       }
       else{
           $user = \App\User::create([
-              'name' => $request->name,
-              // 'email' => $request->email,
+              'name' => $request->name,  
+              'email' => $request->email,
               'username' => $request->username,
               'phone' => $request->phone,
-              // 'address' => $request->address,
+              'address' => $request->address,
               'token' => $request->token,
               'password' => Hash::make($request->password),
               'roles'    => json_encode(['CUSTOMER']),

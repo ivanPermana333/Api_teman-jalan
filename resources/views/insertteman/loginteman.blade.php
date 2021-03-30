@@ -1,3 +1,5 @@
+@section("title") Friends Insert @endsection
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,90 +44,86 @@
   </script>
   <!-- /END GA -->
 </head>
-
 <body>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
-      <div class="navbar-bg"></div>
-      <nav class="navbar navbar-expand-lg main-navbar">
-        <form class="form-inline mr-auto">
-          <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-          </ul>
-        </form>
-        <ul class="navbar-nav navbar-right">
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            @if(\Auth::user()->avatar == !null)
-            <img alt="image" src="{{asset('storage/'.Auth::user()->avatar)}}" class="rounded-circle mr-1">
-            @else
-            <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-            @endif
-            <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div></a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <form id="sample_form" action="{{route("logout")}}" method="POST">
-              @csrf
-                <a onclick="submitForm();" href="javascript:void(0);" class="dropdown-item has-icon text-danger">
-                  <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </nav>
-      <div class="main-sidebar sidebar-style-2">
-        <aside id="sidebar-wrapper">
-          <div class="sidebar-brand">
-            <a>Teman Jalan</a>
-          </div>
-          <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">SC</a>
-          </div>
-          <ul class="sidebar-menu">
-            <li class="menu-header">Menu</li>
-            <!-- <li class="dropdown nonactive">
-              <a href="/home" class="dropdown"><i class="fas fa-home"></i><span>Home</span></a>
-            </li> -->
-            <li class="dropdown nonactive">
-              <a href="{{route('users.index')}}" class="dropdown"><i class="fas fa-users"></i><span>Manage Users</span></a>
-            </li>
-            <li class="dropdown nonactive">
-              <a href="{{route('temans.index')}}" class="dropdown"><i class="fas fa-user"></i><span>Manage Friends</span></a>
-            </li>
-            <li class="dropdown nonactive">
-              <a href="{{route('bookings.index')}}" class="dropdown"><i class="fas fa-inbox"></i><span>Manage Bookings</span></a>
-            </li>
-            <li class="dropdown nonactive">
-              <a href="{{route('schedules.index')}}" class="dropdown"><i class="fas fa-calendar-alt"></i><span>Manage Schedules</span></a>
-            </li>
-          </ul>
-        </aside>
-      </div>
-
+    
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-          <div class="section-header">
-            <h1>@yield("title")</h1>
-          </div>
-          @yield("content")
-        </section>
-      </div>
-      <footer class="main-footer">
-        <div class="footer-left">
-          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-        </div>
-        <div class="footer-right">
 
-        </div>
-      </footer>
+          <div class="col-md-8">
+
+          @if(session('status'))
+          <div class="alert alert-success">
+            {{session('status')}}
+          </div>
+          @endif
+          <img src="stisla/img/teman.png" class="center"> 
+          <form
+            enctype="multipart/form-data"
+            class="bg-white shadow-sm p-3"
+            action="/loginteman"
+            method="POST">
+
+            @csrf
+
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+              value="{{old('username')}}"
+              class="form-control {{$errors->first('username') ? "is-invalid": ""}}"
+              placeholder="Friends Username"
+              type="text"
+              name="username"
+              id="username"/>
+              <!-- <div class="invalid-feedback">
+                {{$errors->first('username')}}
+              </div> -->
+            </div>
+
+        
+            <div class="form-group">
+              <label for="Price">Email</label> <br>
+              <input value="{{old('email')}}" type="text" class="form-control {{$errors->first('email') ? "is-invalid" : ""}}" name="email" id="email" placeholder="Email owner">
+              <!-- <div class="invalid-feedback">
+                {{$errors->first('email')}}
+              </div> -->
+            </div>
+
+            <div class="form-group">
+              <label for="name">Password</label>
+              <input
+              value="{{old('password')}}"
+              class="form-control {{$errors->first('password') ? "is-invalid": ""}}"
+              placeholder="Password"
+              type="password"
+              name="password"
+              id="password"/>
+              <!-- <div class="invalid-feedback">
+                {{$errors->first('name')}}
+              </div> -->
+            </div>
+            <div><a href="/registerteman">Buat Akun baru??</a></div>
+            <div class="text-right">
+              <input
+              class="btn btn-primary"
+              type="submit"
+              value="LOGIN"/>
+            </div>
+          </form>
+          </div>
+      </section>
+      </div>
+      
     </div>
   </div>
 
-  <!-- General JS Scripts -->
-  <!-- <script src="{{asset('stisla/modules/jquery.min.js')}}"></script> -->
+  <!-- //General JS Scripts -->
+  <script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
   <script src="{{asset('stisla/modules/popper.js')}}"></script>
   <script src="{{asset('stisla/modules/tooltip.js')}}"></script>
-  <!-- <script src="{{asset('stisla/modules/bootstrap/js/bootstrap.min.js')}}"></script> -->
+  <script src="{{asset('stisla/modules/bootstrap/js/bootstrap.min.js')}}"></script>
   <script src="{{asset('stisla/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
   <script src="{{asset('stisla/modules/moment.min.js')}}"></script>
   <script src="{{asset('stisla/js/stisla.js')}}"></script>

@@ -51,7 +51,7 @@
               @endif
             </td>
             <td>{{$booking->user->name}}<br><small>{{$booking->user->email}}</small></td>
-            <td>{{$booking->field->name}}</td>
+            <td>{{$booking->teman->name}}</td>
             <td>
               {{$booking->date}}
             </td>

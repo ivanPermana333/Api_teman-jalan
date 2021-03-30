@@ -12,16 +12,16 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
-      // OTORISASI GATE
+    // public function __construct(){
+    //   // OTORISASI GATE
 
-     $this->middleware(function($request, $next){
+    //  $this->middleware(function($request, $next){
 
-       if(Gate::allows('manage-schedules')) return $next($request);
+    //    if(Gate::allows('manage-schedules')) return $next($request);
 
-       abort(403, 'Anda tidak memiliki cukup hak akses');
-     });
-    }
+    //    abort(403, 'Anda tidak memiliki cukup hak akses');
+    //  });
+    // }
 
     public function index()
     {

@@ -1,3 +1,5 @@
+
+@section("title") Bookings @endsection
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,86 +44,125 @@
   </script>
   <!-- /END GA -->
 </head>
-
 <body>
-  <div id="app">
     <div class="main-wrapper main-wrapper-1">
-      <div class="navbar-bg"></div>
-      <nav class="navbar navbar-expand-lg main-navbar">
-        <form class="form-inline mr-auto">
-          <ul class="navbar-nav mr-3">
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-          </ul>
-        </form>
-        <ul class="navbar-nav navbar-right">
-          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            @if(\Auth::user()->avatar == !null)
-            <img alt="image" src="{{asset('storage/'.Auth::user()->avatar)}}" class="rounded-circle mr-1">
-            @else
-            <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-            @endif
-            <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div></a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <form id="sample_form" action="{{route("logout")}}" method="POST">
-              @csrf
-                <a onclick="submitForm();" href="javascript:void(0);" class="dropdown-item has-icon text-danger">
-                  <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-              </form>
-            </div>
-          </li>
-        </ul>
-      </nav>
-      <div class="main-sidebar sidebar-style-2">
-        <aside id="sidebar-wrapper">
-          <div class="sidebar-brand">
-            <a>Teman Jalan</a>
-          </div>
-          <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">SC</a>
-          </div>
-          <ul class="sidebar-menu">
-            <li class="menu-header">Menu</li>
-            <!-- <li class="dropdown nonactive">
-              <a href="/home" class="dropdown"><i class="fas fa-home"></i><span>Home</span></a>
-            </li> -->
-            <li class="dropdown nonactive">
-              <a href="{{route('users.index')}}" class="dropdown"><i class="fas fa-users"></i><span>Manage Users</span></a>
-            </li>
-            <li class="dropdown nonactive">
-              <a href="{{route('temans.index')}}" class="dropdown"><i class="fas fa-user"></i><span>Manage Friends</span></a>
-            </li>
-            <li class="dropdown nonactive">
-              <a href="{{route('bookings.index')}}" class="dropdown"><i class="fas fa-inbox"></i><span>Manage Bookings</span></a>
-            </li>
-            <li class="dropdown nonactive">
-              <a href="{{route('schedules.index')}}" class="dropdown"><i class="fas fa-calendar-alt"></i><span>Manage Schedules</span></a>
-            </li>
-          </ul>
-        </aside>
-      </div>
-
+    
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-          <div class="section-header">
-            <h1>@yield("title")</h1>
-          </div>
-          @yield("content")
-        </section>
-      </div>
-      <footer class="main-footer">
-        <div class="footer-left">
-          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-        </div>
-        <div class="footer-right">
 
-        </div>
-      </footer>
+        <div class="col-md-8">
+
+          @if(session('status'))
+          <div class="alert alert-success">
+            {{session('status')}}
+          </div>
+          @endif
+          <img src="{{asset('stisla/img/teman.png')}}" class="center"> 
+          <form
+            enctype="multipart/form-data"
+            class="bg-white shadow-sm p-3"
+            action="{{route('userteman.update', [$booking->id])}}"
+            method="POST">
+
+            @csrf
+            <input type="hidden" value="PUT" name="_method">
+
+            <div class="form-group">
+              <label for="name">Code</label>
+              <input
+              value="{{$booking->code}}"
+              class="form-control {{$errors->first('name') ? "is-invalid": ""}}"
+              type="text"
+              name="name"
+              id="name"
+              disabled/>
+              <div class="invalid-feedback">
+                {{$errors->first('code')}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="customer">Customer</label>
+              <input
+              value="{{$booking->user->name}}"
+              class="form-control {{$errors->first('location') ? "is-invalid": ""}}"
+              type="text"
+              name="customer"
+              disabled/>
+              <div class="invalid-feedback">
+                {{$errors->first('customer')}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="teman">Teman</label>
+              <input
+              value="{{$booking->teman->name}}"
+              class="form-control {{$errors->first('teman') ? "is-invalid": ""}}"
+              type="text"
+              name="teman"
+              disabled/>
+              <div class="invalid-feedback">
+                {{$errors->first('teman')}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input
+              value="{{$booking->date}}"
+              class="form-control {{$errors->first('date') ? "is-invalid": ""}}"
+              type="text"
+              name="date"
+              disabled/>
+              <div class="invalid-feedback">
+                {{$errors->first('date')}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="time">Time</label>
+              <input
+              value="@foreach (json_decode($booking->time) as $t){{$t}}@endforeach"
+              class="form-control {{$errors->first('date') ? "is-invalid": ""}}"
+              type="text"
+              name="date"
+              disabled/>
+              <div class="invalid-feedback">
+                {{$errors->first('date')}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="total_price">Price</label> <br>
+              <input value="{{$booking->total_price}}" type="text" class="form-control {{$errors->first('price') ? "is-invalid" : ""}}" name="total_price" disabled>
+              <div class="invalid-feedback">
+                {{$errors->first('total_price')}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label><br>
+              <select class="form-control" name="status" id="status" @if($booking->status == "ACCEPT" || $booking->status == "REJECT") disabled @endif>
+                <option {{$booking->status == "PENDING" ? "selected" : ""}} value="PENDING">PENDING</option>
+                <option {{$booking->status == "ACCEPT" ? "selected" : ""}} value="ACCEPT">ACCEPT</option>
+                <option {{$booking->status == "REJECT" ? "selected" : ""}} value="REJECT">REJECT</option>
+              </select>
+            </div>
+
+            <div class="text-right">
+              <input
+              class="btn btn-primary"
+              type="submit"
+              value="Save"/>
+            </div>
+          </form>
+          </div>
+      
     </div>
   </div>
-
-  <!-- General JS Scripts -->
+ <!-- General JS Scripts -->
   <!-- <script src="{{asset('stisla/modules/jquery.min.js')}}"></script> -->
   <script src="{{asset('stisla/modules/popper.js')}}"></script>
   <script src="{{asset('stisla/modules/tooltip.js')}}"></script>
@@ -156,3 +197,5 @@
   </script>
 </body>
 </html>
+
+

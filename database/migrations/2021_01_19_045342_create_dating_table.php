@@ -36,11 +36,9 @@ class CreateDatingTable extends Migration
     public function down()
     {
         Schema::dropIfExists('dating');
-        Schema::table('dating', function(Blueprint $table){
-            $table->dropForeign('dating_user_id_foreign');
-            $table->dropForeign('dating_teman_id_foreign');
-        });
-
-      Schema::dropIfExists('dating');
+        // Schema::table('dating', function(Blueprint $table){
+        //     $table->dropForeign('dating_user_id_foreign');
+        //     $table->dropForeign('dating_teman_id_foreign');
+        // });
     }
 }

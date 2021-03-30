@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\Temans as TemanCollectionResource;
+use Illuminate\Support\Facades\Hash;
+use App\Teman;
+use Illuminate\Support\Facades\Validator;
 
-class TemanController extends Controller
+class InsertController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,7 +32,7 @@ class TemanController extends Controller
        $keyword = $request->get('keyword') ? $request->get('keyword') : '';
        $temans = \App\Teman::where("name", "LIKE", "%$keyword%")->paginate(10);
  
-       return view('temans.index', ['temans' => $temans]);
+       return view('insertteman.index', ['temans' => $temans]);
      }
  
      /**
@@ -39,8 +42,7 @@ class TemanController extends Controller
       */
      public function create()
      {
-      //  $temans = \App\Teman::get();
-       return view('temans.create');
+       return view('insertteman.index');
      }
  
      /**
@@ -86,7 +88,7 @@ class TemanController extends Controller
  
        $new_temans->save();
  
-       return redirect()->route('temans.index')->with('status', 'temans successfully added.');
+       return redirect()->route('insertteman.index')->with('status', 'temans successfully added.');
      }
  
      /**
@@ -95,11 +97,55 @@ class TemanController extends Controller
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-     public function show($id)
+     public function show()
      {
-         //
+      return view('insertteman.loginteman');
      }
  
+     public function register(Request $request)
+    {
+            \Validator::make($request->all(), [
+              "name" => "required|min:5|max:200",
+            "umur" => "required",
+            "username" => "required",
+              "location" => "required",
+              "open" => "required",
+              "address" => "required",
+              "price" => "required|digits_between:0,10",
+              "close" => "required",
+              "picture" => "required",
+              "email" => "required",
+              "password" => "required|min:5|max:200",
+            ])->validate();
+
+          $temans = \App\Teman::create([
+              'name' => $request->name, 
+              'username' => $request->username,
+              'umur' => $request->umur, 
+              'location' => $request->location,
+              'open' => $request->open,
+              'address' => $request->address,
+              'price' => $request->price,
+              'close' => $request->close,
+              'picture' => $request->picture,
+              'email' => $request->email,
+              'token' => $request->token,
+              'password' => Hash::make($request->password),
+              'roles'    => "json_encode(['USERTEMAN'])",
+          ]);
+
+          if($request->file('picture')){
+            $file = $request->file('picture')->store('pictures', 'public');
+  
+            $temans->picture = $file;
+        }
+  
+        $temans->save();
+          return redirect('/loginteman')->with('status', 'temans successfully added.');
+      }
+  
+    
+
      /**
       * Show the form for editing the specified resource.
       *
@@ -139,8 +185,8 @@ class TemanController extends Controller
        $temans = \App\Teman::findOrFail($id);
  
        $temans->name = $request->get('name');
-       $temans->umur = $request->get('umur');
-       $temans->username = $request->get('username');
+       $new_temans->umur = $request->get('umur');
+       $new_temans->username = $request->get('username');
       //  $temans->category = $request->get('category');
        $temans->open = $request->get('open');
        $temans->close = $request->get('close');
@@ -159,9 +205,41 @@ class TemanController extends Controller
  
        $temans->save();
  
-       return redirect()->route('temans.index', [$id])->with('status', 'temans succesfully updated');
+       return redirect()->route('insertteman.index', [$id])->with('status', 'temans succesfully updated');
      }
  
+     public function login(Request $request)
+    {
+      $this->validate($request, [
+        'email' => 'required',
+        'password' => 'required',
+    ]);
+
+      $temans = Teman::where('email', '=', $request->email)->where('roles', '["USERTEMAN"]')->first();
+      $status = "error";
+      $message = "";
+      $data = null;
+      $code = 302;
+
+      if($temans){
+        if(Hash::check($request->password, $temans->password)){
+          $status = 'success';
+          $message = 'Login sukses';
+          $temans->token = $request->token;
+          $temans->save();
+          // tampilkan data temans menggunakan method toArray
+          $data = $temans->toArray();
+          $code = 200;
+        }else{
+          $message = "Login gagal, password salah";
+        }
+      }else {
+        $message = "Login gagal, user " . $request->email . " tidak ditemukan";
+      }
+
+      return redirect('/userteman')->with('status', "welcome " . $request->username);
+    }
+
      /**
       * Remove the specified resource from storage.
       *
@@ -174,7 +252,7 @@ class TemanController extends Controller
  
        $temans->delete();
  
-       return redirect()->route('temans.index')->with('status', 'temans successfully delete');
+       return redirect()->route('insertteman.index')->with('status', 'temans successfully delete');
      }
  
      public function temans(Request $request)

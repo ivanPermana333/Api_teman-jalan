@@ -32,3 +32,17 @@ Route::resource("temans", "TemanController");
 Route::resource("bookings", "BookingController");
 
 Route::resource("schedules", "ScheduleController");
+
+Route::resource("insertteman", "InsertController");
+
+Route::resource("userteman", "UserTemanController");
+Route::get('/registerteman', 'InsertController@create');
+Route::post('/registerteman', 'InsertController@register');
+Route::get('/loginteman', 'InsertController@show');
+Route::post('/loginteman', 'InsertController@login');
+Route::get('/userteman','UserTemanController@index');
+Route::get('/userteman/{id}','UserTemanController@bookings');
+Route::get('/bukti_pembayaran/{id}','BookingController@show');
+Route::put('/bukti_pembayaran/{id}','BookingController@payment');
+
+

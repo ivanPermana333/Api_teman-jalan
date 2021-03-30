@@ -53,6 +53,17 @@
 /* 2. Mixin */
 /* 3. Bootstrap Override */
 /* 3.1 Misc */
+
+/* .h2 {
+  
+}*/
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+} 
 .btn:focus,
 .btn:active,
 .btn:active:focus,
@@ -136,7 +147,8 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
   .lead {
     font-size: 17px;
     line-height: 30px; } }
-h1, h2, h3, h4, h5, h6 {
+  
+h1,h3, h4, h5, h6 {
   font-weight: 700; }
 
 p, ul:not(.list-unstyled), ol {
@@ -2319,7 +2331,7 @@ pre {
 .main-sidebar {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   position: fixed;
-  top: 0;
+  top: 0; 
   height: 100%;
   width: 250px;
   background-color: #fff;
@@ -2430,7 +2442,8 @@ body.sidebar-mini .main-sidebar {
 body.sidebar-mini .navbar {
   left: 65px; }
 body.sidebar-mini .main-content, body.sidebar-mini .main-footer {
-  padding-left: 90px; }
+  /* padding-left: 90px;  */
+}
 
 body.layout-2 .navbar-bg {
   z-index: 889;
@@ -2468,7 +2481,7 @@ body.layout-2 .main-sidebar {
     padding-left: 34px; }
 body.layout-2 .main-content {
   padding-top: 107px;
-  padding-left: 30px;
+  /* padding-left: 30px; */
   padding-right: 0;
   width: calc(100% - 200px); }
 body.layout-2 .main-footer {
@@ -2683,8 +2696,8 @@ body.layout-3 .main-footer {
         padding-left: 10px; }
 
 .main-content {
-  padding-left: 280px;
-  padding-right: 30px;
+    padding-left: 280px;
+    padding-right: 30px;
   padding-top: 80px;
   width: 100%;
   position: relative; }

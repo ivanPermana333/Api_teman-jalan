@@ -24,8 +24,13 @@ Route::get('/profile/{id}','UserController@profile');
 Route::get('/temans','TemanController@temans');
 Route::get('/temanAll','TemanController@temanAll');
 Route::get('/unavailable/{id}/{date}','BookingController@unavailableTime');
-Route::post('/booking','BookingController@store');
-Route::get('/bookings/{id}','BookingController@bookings');
+Route::post('/bookings','BookingController@store');
+Route::get('/bookings/{id}','BookingController@bookings');  
+
+// Route::get('/unavailabletemans/{id}/{date}','UserTemanController@unavailableTime');
+// Route::post('/usertemans','UserTemanController@store');
+// Route::get('/usertemans/{id}','UserTemanController@bookings');  
+
 // Route::post('/match','MatchController@store');
 // Route::get('/matchs/{id}','MatchController@index');
 // Route::get('/mymatch/{id}','MatchController@myMatch');

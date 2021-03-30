@@ -79,7 +79,7 @@
     <nav class="d-inline-block">
       <tr>
         <td colspan=10>
-          {{$temans->links()}}
+         
         </td>
       </tr>
     </nav>

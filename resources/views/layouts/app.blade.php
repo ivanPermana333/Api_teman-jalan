@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Sports Club @yield("title")</title>
-  <link rel="icon" href="{{asset('stisla/img/logo-scportsclub.svg')}}">
+  <title>Teman Jalan @yield("title")</title>
+  <link rel="icon" href="{{asset('stisla/img/teman.png')}}">
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">

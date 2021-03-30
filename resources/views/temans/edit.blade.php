@@ -55,14 +55,14 @@
       <small class="text-muted">Kosongkan jika tidak ingin mengubah picture</small>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="category">Category</label>
       <select name="category" class="form-control" value="test">
         <option {{$temans->category == "Futsal" ? "selected" : ""}} value="Futsal">Futsal</option>
         <option {{$temans->category == "Volly" ? "selected" : ""}} value="Volly" disabled>Volly (Coming Soon)</option>
         <option v{{$temans->category == "Badminton" ? "selected" : ""}} alue="Badminton" disabled>Badminton (Coming Soon)</option>
       </select>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="address">Address</label>
